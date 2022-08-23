@@ -1,4 +1,5 @@
 from crypt import methods
+from classes.materials import Materials
 from flask import render_template, request
 from app import create_app
 from classes.worker import Worker
@@ -32,4 +33,13 @@ def capture_work_details(version):
     daily_rate = request.json['daily_rate']
     response = Worker.capture_wrk_details(
         user_id, daily_rate, arrival_time,departure_time)
+    return response
+
+@app.route('/api/<version>/materials/usage', methods=['POST'])
+# @validate_content_type
+def materials_used(version):
+    material_type = request.json['material_type']
+    quantity = request.json['quantity']
+    unit_price = request.json['unit_price']
+    response = Materials.add_materials(material_type, quantity, unit_price)
     return response

@@ -1,5 +1,6 @@
 from utility.class_utility import json_response, \
-    is_string, check_length, check_user_type, check_time_stamp , check_rate
+    is_string, check_length, check_user_type, \
+        check_time_stamp , check_integer, check_user_id
 from utility.messages import Messages
 from app.models import User, WorkDetails
 
@@ -29,7 +30,7 @@ class Worker(object):
                                 arrival_time, departure_time): 
         
         valid_wrk_details_msg = cls.check_daily_work_details(
-            daily_rate, arrival_time, departure_time) 
+            user_id, daily_rate, arrival_time, departure_time) 
         if valid_wrk_details_msg == True:
             try:
                 worker_name = User.check_user_exists_by_id(user_id)
@@ -47,8 +48,7 @@ class Worker(object):
                 print (exc)
         else:
             return json_response(valid_wrk_details_msg, 400)      
-
-        
+      
     @classmethod
     def validations(cls, name, user_type):
 
@@ -68,13 +68,16 @@ class Worker(object):
         return response
     
     @classmethod
-    def check_daily_work_details(cls, daily_rate,
+    def check_daily_work_details(cls, user_id,daily_rate,
                                 arrival_time, departure_time):
-        is_valid_rate = check_rate(daily_rate)
+        user_id_present = check_user_id(user_id)
+        is_valid_rate = check_integer(daily_rate)
         is_arrival_time_valid = check_time_stamp(arrival_time)
         is_departure_time_valid = check_time_stamp(departure_time)
         
-        if not daily_rate or not arrival_time or not departure_time:
+        if not user_id_present:
+            response = Messages.missing_user_id()
+        elif not daily_rate or not arrival_time or not departure_time:
             response = Messages.missing_details()
         elif not is_valid_rate:
             response = Messages.invalid_rate()
@@ -86,5 +89,3 @@ class Worker(object):
             response =True
         return response
         
-        
-    

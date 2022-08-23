@@ -8,6 +8,10 @@ class Messages(object):
         return {'error': 'missing details in body'}
     
     @classmethod
+    def missing_user_id(cls):
+        return {'error': 'missing user_id in body'}
+    
+    @classmethod
     def invalid_str_length(cls):
         return {'error': 'Invalid name length. a minimum\
             lenghth of three characters is required'}
@@ -47,8 +51,22 @@ class Messages(object):
         return {'error': 'Worker does not exist'}
     
     @classmethod
+    def invalid_material_type(cls):
+        return {'error': 'Invalid material type, use sand, cement, bricks,nails,water, stone aggregates '}
+    
+    @classmethod
+    def invalid_quantity(cls):
+        return {'error': 'Quantity is not valid.'}
+    
+    @classmethod
+    def invalid_price(cls):
+        return {'error': 'Price is not valid'}     
+    
+    @classmethod
+    def material_added(cls):
+        return {'message': 'Materials details successfully added'}       
+    
+    @classmethod
     def invalid_keys(cls):
         return {'error':'Invalid keys submited'}
-    
-    
     

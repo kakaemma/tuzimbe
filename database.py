@@ -26,7 +26,14 @@ class DatabaseConnection():
                                 departure_time TIMESTAMP NOT NULL ,
                                 FOREIGN KEY (user_id)REFERENCES 
                                 users (id));""")
+        
+        create_materials_table = (""" CREATE TABLE IF NOT EXISTS 
+                        material_details(id SERIAL PRIMARY KEY,
+                        material_type VARCHAR (20) NOT NULL,  
+                        quantity VARCHAR (10) NOT NULL ,
+                        unit_price INTEGER NOT NULL);""")
+        
         self.cursor.execute(creater_users_table_querry)
         self.cursor.execute(create_work_details_table)
-
+        self.cursor.execute(create_materials_table)
         
