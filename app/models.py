@@ -1,6 +1,7 @@
 from sqlite3 import connect
 from database import DatabaseConnection
 
+
 connection = DatabaseConnection()
 
 class User(object):
@@ -15,6 +16,7 @@ class User(object):
         connection.cursor.execute(query_for_checking_user, [name])
         row = connection.cursor.fetchone()
         return row
+    
     @staticmethod
     def check_user_exists_by_id(user_id):
         try:
@@ -38,4 +40,14 @@ class WorkDetails(object):
         except Exception as exec:
             print(exec)
             
+class MaterialDetails(object):
+    @staticmethod
+    def capture_material_details(material_type, quantity, unit_price):
+        try:
+            add_material_details = "INSERT INTO material_details(material_type, quantity, \
+            unit_price) VALUES (%s,%s,%i)"
+            connection.cursor.execute(
+            add_material_details, (material_type, quantity,  unit_price))
+        except Exception as exec:
+            print(exec)           
   

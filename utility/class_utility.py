@@ -1,4 +1,3 @@
-import datetime
 import re
 from flask import jsonify
 from utility.messages import Messages
@@ -32,12 +31,23 @@ def check_time_stamp(time_stamp):
         return True
     return False    
 
-def check_rate(daily_rate):
-    if daily_rate and type(daily_rate)== int:
+def check_integer(value):
+    if value and type(value)== int:
         return True
     return False
 
-    
+def check_user_id(user_id):
+    if user_id:
+        return True
+    return 
+
+def check_material_type(material):
+    material_type = ['sand', 'cement', 'bricks', 'nails',
+'water', 'stone aggregates' ]
+    if material in material_type:
+        return True
+    return False
+
 def invalid_keys():
     return json_response(Messages.invalid_keys, 400)
 
